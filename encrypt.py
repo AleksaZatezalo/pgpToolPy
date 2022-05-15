@@ -16,13 +16,20 @@ def setKey(key):
 
     g_key = key
 
+def getKey():
+    """
+    Gets keys.
+    """
+    
+    return g_key
+
 def saveKey(name):
     """
     Saves a key to a new file.
     """
 
-     f = open(name, "w")
-     f.write(g_key)
+    f = open(name, "w")
+    f.write(g_key)
 
 def openKey(name):
     """
@@ -30,7 +37,7 @@ def openKey(name):
     """    
 
     f = open(name, "r")
-    setKey(f.read()))
+    setKey(f.read())
 
 
 def genKeys():
@@ -92,3 +99,23 @@ def dencryptFile(path, key):
     data = f.read()
     denc = pgpy_encrypt(g_key, data)
     f.write(denc)
+
+if __name__ == "__main__":
+    print("Welcome to Text File Encryptor.")
+    keyState = input("Generate a new Key(Y/N)")
+
+    # Fetches Keys
+    if (keyState == "Y"):
+        setKey(genKeys)
+        saveKey(getKey())
+    else:
+        path = input("What is the key file path?")
+        openKey(path)
+    
+    state = input("Are you encrypting or decrypting?")
+    if (state == "encrypt"):
+       encryptFile(input("Path to the file to encrypt?"), getKey())
+    else:
+        dencryptFile(input("Path to the file to encrypt?"), getKey())
+
+    print("Task complete.")
